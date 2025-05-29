@@ -9,13 +9,13 @@ class AuthService {
 static Future<bool> register(String email, String password) async {
   try {
     final response = await http.post(
-      Uri.parse("$_apiUrl/register"), // Adaptez l'URL
+      Uri.parse("$_apiUrl/register"), 
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
     );
     
-    print("Status Code: ${response.statusCode}"); // Debug
-    print("Response Body: ${response.body}"); // Debug
+    print("Status Code: ${response.statusCode}"); 
+    print("Response Body: ${response.body}"); 
 
     if (response.statusCode == 201) {
       return true;
@@ -23,12 +23,12 @@ static Future<bool> register(String email, String password) async {
       throw Exception("Erreur: ${response.body}");
     }
   } catch (e) {
-    print("Erreur d'inscription: $e"); // Debug crucial
+    print("Erreur d'inscription: $e"); 
     return false;
   }
 }
 
-  // Connexion
+  
   static Future<bool> login(String email, String password) async {
     final response = await http.post(
       Uri.parse("$_apiUrl/login"),
@@ -44,12 +44,12 @@ static Future<bool> register(String email, String password) async {
     return false;
   }
 
-  // Déconnexion
+  
   static Future<void> logout() async {
     await _storage.delete(key: 'auth_token');
   }
 
-  // Vérifier si connecté
+  
   static Future<bool> isLoggedIn() async {
     return await _storage.read(key: 'auth_token') != null;
   }
