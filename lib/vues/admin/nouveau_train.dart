@@ -3,17 +3,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 
-class Train2FormPage extends StatefulWidget {
+class NewTrainFormPage extends StatefulWidget {
   final Map<String, dynamic>? train;
 
-  const Train2FormPage({this.train});
+  const NewTrainFormPage({this.train});
 
   @override
-  _Train2FormPageState createState() => _Train2FormPageState();
+  _NewTrainFormPageState createState() => _NewTrainFormPageState();
 
 }
 
-class _Train2FormPageState extends State<Train2FormPage> {
+class _NewTrainFormPageState extends State<NewTrainFormPage> {
   final _formKey = GlobalKey<FormState>();
 
   int? _sortColumnIndex;
@@ -101,7 +101,6 @@ class _Train2FormPageState extends State<Train2FormPage> {
   }
 
   @override
-    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.train == null ? 'Ajouter un nouveau Train' : 'Modifier le Train')),
@@ -127,54 +126,39 @@ class _Train2FormPageState extends State<Train2FormPage> {
               ),
             ),
             Divider(height: 40),
-            Text("Liste des trains enregistrés :", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            Text("Tous les trains :", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             SizedBox(height: 10),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                sortColumnIndex: _sortColumnIndex,
-                sortAscending: _sortAscending,
-                columns: [
-                  DataColumn(
-                    label: Text('Nom'),
-                    onSort: (i, asc) => _sortList('name', i, asc),
-                  ),
-                  DataColumn(
-                    label: Text('État'),
-                    onSort: (i, asc) => _sortList('status', i, asc),
-                  ),
-                  DataColumn(
-                    label: Text('Disponible'),
-                    onSort: (i, asc) => _sortList('available', i, asc),
-                  ),
-                  DataColumn(label: Text('Modifier')),
-                ],
-                rows: trainList.map((train) {
-                  return DataRow(cells: [
-                    DataCell(Text(train['name'] ?? '')),
-                    DataCell(Text(train['status'] ?? '')),
-                    DataCell(Text(train['available'] == true ? 'Oui' : 'Non')),
-                    DataCell(
-                      IconButton(
-                        icon: Icon(Icons.edit, color: Colors.blue),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => Train2FormPage(train: train),
-                            ),
-                          ).then((_) => fetchTrainList());
-                        },
+
+            ...trainList.map((train) {
+            return Card(
+              margin: EdgeInsets.symmetric(vertical: 8),
+              child: ListTile(
+                title: Text(train['name'] ?? '', style: TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Description: ${train['description'] ?? ''}"),
+                    Text("État: ${train['status'] ?? ''}"),
+                    Text("Disponible: ${train['available'] == true ? 'Oui' : 'Non'}"),
+                  ],
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.edit, color: Colors.blue),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => NewTrainFormPage(train: train),
                       ),
-                    ),
-                  ]);
-                }).toList(),
+                    ).then((_) => fetchTrainList());
+                  },
+                ),
               ),
-            ),
+            );
+          }).toList(),
           ],
         ),
       ),
     );
   }
-
 }

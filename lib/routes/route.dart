@@ -8,5 +8,5 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/': (context) => HomePageAdmin(),
   '/trains': (context) => TrainListPage(),
   '/reservations': (context) => ReservationListPage(),
-  '/tous_les_trains': (context) => Train2FormPage(),
+  '/tous_les_trains': (context) => NewTrainFormPage(),
 };

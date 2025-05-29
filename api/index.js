@@ -67,6 +67,77 @@ app.put('/trains/:id', async (req, res) => {
   }
 });
 
+app.patch('/trains/:id', async (req, res) => {
+  const client = new MongoClient(url);
+  try {
+    const updates = req.body;
+    const trainId = req.params.id;
+
+    await client.connect();
+    const db = client.db(dbName);
+
+    const result = await db.collection('trains').updateOne(
+      { _id: new ObjectId(trainId) },
+      { $set: updates }
+    );
+
+    if (result.modifiedCount === 0) {
+      res.status(404).send("Aucun train mis à jour.");
+    } else {
+      res.status(200).send("Train mis à jour avec succès.");
+    }
+  } catch (err) {
+    res.status(500).send(err.toString());
+  } finally {
+    await client.close();
+  }
+});
+
+app.post('/issues', async (req, res) => {
+  const client = new MongoClient(url);
+  try {
+    const { trainId, description } = req.body;
+    if (!trainId || !description) {
+      return res.status(400).send("trainId et description sont requis.");
+    }
+
+    await client.connect();
+    const db = client.db(dbName);
+
+    const issue = {
+      trainId: new ObjectId(trainId),
+      description,
+      date: new Date()
+    };
+    await db.collection('issues').insertOne(issue);
+
+    await db.collection('trains').updateOne(
+      { _id: new ObjectId(trainId) },
+      { $set: { issues: true } }
+    );
+
+    res.status(201).send("Problème signalé et train mis à jour.");
+  } catch (err) {
+    res.status(500).send(err.toString());
+  } finally {
+    await client.close();
+  }
+});
+
+app.get('/issues', async (req, res) => {
+  const client = new MongoClient(url);
+  try {
+    await client.connect();
+    const db = client.db(dbName);
+    const issues = await db.collection('issues').find().toArray();
+    res.json(issues);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  } finally {
+    await client.close();
+  }
+});
+
 app.get('/reservations', async (req, res) => {
   const client = new MongoClient(url);
   try {
