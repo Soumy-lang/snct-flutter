@@ -1,4 +1,4 @@
-import '../models/reservation_model.dart';
+import '../../models/admin/reservation_model.dart';
 
 class ReservationService {
   List<Reservation> _reservations = [];
