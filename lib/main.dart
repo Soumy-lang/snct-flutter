@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'routes/route.dart'; 
+import 'package:snct_app/vues/login.dart';
+import 'package:snct_app/vues/register.dart';
 
-void main() async {  
-  runApp(MyApp());
+void main()  {
+  runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SNCT Admin',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/register',
       routes: appRoutes,
     );
   }
