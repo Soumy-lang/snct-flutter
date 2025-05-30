@@ -1,4 +1,4 @@
-import '../models/train_model.dart';
+import '../../models/admin/train_model.dart';
 
 class TrainService {
   List<Train> _trains = [];
