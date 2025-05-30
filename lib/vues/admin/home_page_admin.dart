@@ -35,6 +35,7 @@ class HomePageAdmin extends StatelessWidget {
           ],
         ),
         backgroundColor: Colors.teal[700],
+        foregroundColor: Colors.white, 
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,21 +48,21 @@ class HomePageAdmin extends StatelessWidget {
                     context,
                     icon: Icons.train,
                     label: "Gérer les Trajets",
-                    route: '/trains',
+                    route: '/admin/trains',
                     color: Colors.orange,
                   ),
                   buildCard(
                     context,
                     icon: Icons.list_alt,
                     label: "Tous les Trains",
-                    route: '/tous_les_trains',
+                    route: '/admin/tous_les_trains',
                     color: Colors.blue,
                   ),
                   buildCard(
                     context,
                     icon: Icons.book_online,
                     label: "Toutes les réservations",
-                    route: '/reservations',
+                    route: '/admin/reservations',
                     color: Colors.green,
                   ),
                 ],

@@ -103,7 +103,20 @@ class _NewTrainFormPageState extends State<NewTrainFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.train == null ? 'Ajouter un nouveau Train' : 'Modifier le Train')),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Image.asset(
+              '../assets/images/logo.jpg',
+              height: 40,
+            ),
+            SizedBox(width: 10),
+            Text(widget.train == null ? 'Ajouter un nouveau Train' : 'Modifier le Train'),
+          ],
+        ),
+        backgroundColor: Colors.teal[700],
+        foregroundColor: Colors.white, 
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: ListView(
@@ -119,9 +132,20 @@ class _NewTrainFormPageState extends State<NewTrainFormPage> {
                     title: Text("Disponible"),
                     value: isAvailable,
                     onChanged: (val) => setState(() => isAvailable = val),
+                    activeColor: Color.fromARGB(255, 39, 176, 142),        
+                    activeTrackColor: Color.fromARGB(100, 39, 176, 142),   
                   ),
                   SizedBox(height: 20),
-                  ElevatedButton(onPressed: _submit, child: Text("Enregistrer")),
+                  ElevatedButton(
+                    onPressed: _submit,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 39, 176, 142), 
+                      foregroundColor: Colors.white,  
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                    ),
+                    child: Text("Enregistrer"),
+                  ),
                 ],
               ),
             ),

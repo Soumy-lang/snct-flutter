@@ -138,6 +138,26 @@ app.get('/issues', async (req, res) => {
   }
 });
 
+app.get('/issues/train/:trainId', async (req, res) => {
+  const client = new MongoClient(url);
+  const trainId = req.params.trainId;
+
+  try {
+    await client.connect();
+    const db = client.db(dbName);
+    const issues = await db
+      .collection('issues')
+      .find({ trainId: trainId })
+      .sort({ date: -1 }) 
+      .toArray();
+    res.json(issues);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  } finally {
+    await client.close();
+  }
+});
+
 app.get('/reservations', async (req, res) => {
   const client = new MongoClient(url);
   try {

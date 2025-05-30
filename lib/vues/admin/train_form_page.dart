@@ -14,6 +14,7 @@ class TrainFormPage extends StatefulWidget {
 class _TrainFormPageState extends State<TrainFormPage> {
   final _formKey = GlobalKey<FormState>();
   List<dynamic> simpleTrains = [];
+  List<dynamic> trainIssues = [];
   String? selectedTrainName;
   late TextEditingController departureController;
   late TextEditingController arrivalController;
@@ -34,9 +35,12 @@ class _TrainFormPageState extends State<TrainFormPage> {
     isAvailable = widget.train?['available'] ?? true;
     isOnTrip = widget.train?['onTrip'] ?? false;
     selectedTrainName = widget.train?['name'];
+
     if (widget.train != null) {
       departureTime = DateTime.tryParse(widget.train!['departureTime'] ?? '');
       arrivalTime = DateTime.tryParse(widget.train!['arrivalTime'] ?? '');
+
+      // fetchIssuesForTrain(widget.train!['_id']);
     }
     fetchSimpleTrains();
   }
@@ -51,7 +55,7 @@ class _TrainFormPageState extends State<TrainFormPage> {
       print('Erreur chargement trains simples: ${response.statusCode}');
     }
   }
-
+ 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -67,6 +71,7 @@ class _TrainFormPageState extends State<TrainFormPage> {
 
     final isUpdate = widget.train != null;
     final id = widget.train?['_id'];
+    // print(id);
     final uri = isUpdate
         ? Uri.parse('http://localhost:3000/trains/$id')
         : Uri.parse('http://localhost:3000/trains');
@@ -80,7 +85,6 @@ class _TrainFormPageState extends State<TrainFormPage> {
             body: json.encode(trainData));
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      // Si on est en modification ET un problème est signalé
       if (isUpdate && issueController.text.trim().isNotEmpty) {
         await http.post(
           Uri.parse('http://localhost:3000/issues'),
@@ -92,7 +96,7 @@ class _TrainFormPageState extends State<TrainFormPage> {
           }),
         );
 
-        await http.patch(
+        await http.put(
           Uri.parse('http://localhost:3000/trains/$id'),
           headers: {'Content-Type': 'application/json'},
           body: json.encode({'issues': true}),
@@ -125,14 +129,24 @@ class _TrainFormPageState extends State<TrainFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Color cardColor = Color.fromARGB(255, 39, 176, 142).withOpacity(0.1);
-
     return Scaffold(
-      appBar: AppBar(title: Text(widget.train == null ? "Ajouter un Train" : "Modifier un Train")),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Image.asset(
+              '../assets/images/logo.jpg',
+              height: 40,
+            ),
+            SizedBox(width: 10),
+            Text(widget.train == null ? "Ajouter un Train" : "Modifier un Train"),
+          ],
+        ),
+        backgroundColor: Colors.teal[700],
+        foregroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Card(
-          color: cardColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           elevation: 4,
           child: Padding(
@@ -155,7 +169,6 @@ class _TrainFormPageState extends State<TrainFormPage> {
                     onChanged: (value) => setState(() => selectedTrainName = value),
                     validator: (value) => value == null || value.isEmpty ? 'Sélection requise' : null,
                   ),
-
                   TextFormField(
                     controller: departureController,
                     decoration: InputDecoration(labelText: 'Ville de Départ'),
@@ -187,11 +200,15 @@ class _TrainFormPageState extends State<TrainFormPage> {
                     title: Text("Disponible"),
                     value: isAvailable,
                     onChanged: (val) => setState(() => isAvailable = val),
+                    activeColor: Color.fromARGB(255, 39, 176, 142),        
+                    activeTrackColor: Color.fromARGB(100, 39, 176, 142),   
                   ),
                   SwitchListTile(
-                    title: Text("Sur le trajet"),
+                    title: Text("Sur un trajet"),
                     value: isOnTrip,
                     onChanged: (val) => setState(() => isOnTrip = val),
+                    activeColor: Color.fromARGB(255, 39, 176, 142),        
+                    activeTrackColor: Color.fromARGB(100, 39, 176, 142),   
                   ),
                   if (widget.train != null) ...[
                     SizedBox(height: 20),

@@ -59,7 +59,20 @@ class _TrainListPageState extends State<TrainListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Liste des Trains')),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Image.asset(
+              '../assets/images/logo.jpg',
+              height: 40,
+            ),
+            SizedBox(width: 10),
+            Text('Programme'),
+          ],
+        ),
+        backgroundColor: Colors.teal[700],
+        foregroundColor: Colors.white, 
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: ListView.builder(
@@ -68,7 +81,6 @@ class _TrainListPageState extends State<TrainListPage> {
             final train = trains[index];
             return Card(
               margin: EdgeInsets.symmetric(vertical: 8),
-              color: Color.fromARGB(255, 39, 176, 142).withOpacity(0.1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               child: Padding(
                 padding: const EdgeInsets.all(16),
