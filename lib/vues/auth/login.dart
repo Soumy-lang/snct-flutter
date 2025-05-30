@@ -115,8 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                   controllerMdp.text,
                 );
                 if (success) {
-                  // Navigator.pushReplacementNamed(context, '/home');
-                  print("Less goo");
+                  Navigator.pushReplacementNamed(context, '/user');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Identifiants invalides")),
@@ -143,7 +142,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget forgotPassword(context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, "/forgot-password");
+      },
       child: const Text(
         "Mot de passe oublié ?",
         style: TextStyle(color: Color.fromARGB(255, 39, 176, 142)),
