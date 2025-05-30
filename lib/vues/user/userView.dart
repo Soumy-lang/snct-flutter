@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/myBottomAppBar.dart';
-import '../widgets/myAppBar.dart';
-import '../widgets/bodyContain.dart';
+import '../../widgets/myBottomAppBar.dart';
+import '../../widgets/myAppBar.dart';
+import '../../widgets/bodyContain.dart';
 
 class UserPage extends StatelessWidget {
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './vues/userView.dart';
+import 'package:snct_app/routes/routes.dart';
+import 'vues/user/userView.dart';
 
 
 void main() {
@@ -13,8 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
     debugShowCheckedModeBanner: false,
     title:'SNCT',
-    
-    home:UserPage()
+    initialRoute: AppRoutes.uservues,
+    onGenerateRoute:AppRoutes.generateRoute,
   );
 }}
 
