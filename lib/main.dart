@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'routes/route.dart'; 
-import 'package:snct_app/vues/login.dart';
-import 'package:snct_app/vues/register.dart';
 
 void main()  {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
