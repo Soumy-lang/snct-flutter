@@ -14,16 +14,20 @@ static Future<bool> register(String email, String password) async {
       body: jsonEncode({'email': email, 'password': password}),
     );
 
+    print("Status Code: ${response.statusCode}"); 
+    print("Response Body: ${response.body}"); 
+
     if (response.statusCode == 201) {
       return true;
     } else {
       throw Exception("Erreur: ${response.body}");
     }
   } catch (e) {
+    print("Erreur d'inscription: $e"); 
+
     return false;
   }
 }
-
   static Future<bool> login(String email, String password) async {
     final response = await http.post(
       Uri.parse("$_apiUrl/login"),

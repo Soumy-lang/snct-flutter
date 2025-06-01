@@ -4,4 +4,3 @@ MAILTRAP_USER=votre_username_mailtrap
 MAILTRAP_PASS=votre_password_mailtrap
 EMAIL_USER=no-reply@snct.ru
 PORT=5000
-PORT=5000

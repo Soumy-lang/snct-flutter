@@ -115,7 +115,9 @@ class _LoginPageState extends State<LoginPage> {
                   controllerMdp.text,
                 );
                 if (success) {
-                  Navigator.pushReplacementNamed(context, '/user');
+                  Navigator.pushReplacementNamed(context, '/admin');
+                  print("Less goo");
+
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Identifiants invalides")),

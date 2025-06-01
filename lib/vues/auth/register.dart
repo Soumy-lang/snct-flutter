@@ -40,6 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return null;
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,6 +119,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       controller: controllerConfirmMdp,
                       validator:validateConfirmPassword,
+
+//                       validator: (value){
+//                           if (value == null || value.isEmpty) {
+//                           return 'Merci de confirmer le mot de passe';
+//                         }
+//                         return null;
+//                       },
+
                       decoration: InputDecoration(
                         hintText: "Confirmer mot de passe",
                         border: OutlineInputBorder(
@@ -145,7 +154,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     controllerMdp.text,
                                   );
                                   if (success) {
-                                     Navigator.pushReplacementNamed(context, '/user');
+                                    Navigator.pushReplacementNamed(context, '/login');
+                                    print("Less goo");
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text("Échec de l'inscription")),
