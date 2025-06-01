@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snct_app/services/otp.dart';
+import 'package:snct_app/services/auth/otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SendOtpScreen extends StatefulWidget {
