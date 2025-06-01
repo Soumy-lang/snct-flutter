@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../vues/user/horairesView.dart';
 import '../vues/user/userView.dart';
 import '../vues/user/titreView.dart';
-import '../vues/user/ResultatsTrajetPage.dart';
+//import '../vues/user/ResultatsTrajetPage.dart';
 
 class AppRoutes {
   static const String uservues = '/user';

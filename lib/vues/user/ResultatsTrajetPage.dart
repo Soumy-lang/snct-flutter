@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/myBottomAppBar.dart';
-import '../../widgets/myAppBar.dart';
+
 
 class TrajetPage_results extends StatelessWidget {
   final List<dynamic> resultats;
