@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
-
+import '../widgets/titres/shopping_bag.dart';
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const MyAppBar({super.key});
+  final int currentIndex;
+  const MyAppBar({super.key,required this.currentIndex});
 
 @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight+48);
  
 @override
   State<MyAppBar> createState() => _MyAppBarState();
 }
 
 class _MyAppBarState extends State<MyAppBar> {
+void _openCart(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) => const CartSheet(),
+  );
+}
 
 
   @override
@@ -26,6 +35,28 @@ class _MyAppBarState extends State<MyAppBar> {
           height: 40,
           ),
       ),
+      bottom: widget.currentIndex == 1
+          ? const TabBar(
+              tabs: [
+                Tab(text: 'Les lignes'),
+                Tab(text: 'Les arrêts'),
+              ],
+            )
+          : widget.currentIndex == 2?
+          const TabBar(
+            tabs: [
+              Tab(text: 'Acheter'),
+              Tab(text: 'Mes titres')
+            ]
+          ) 
+          :null,
+          actions: [
+    if (widget.currentIndex == 2)
+      IconButton(
+        icon: const Icon(Icons.shopping_bag, color: Colors.black),
+        onPressed: () =>_openCart(context),
+      ),
+  ],
       title: Text('CHINA',
       style: TextStyle(color: Colors.black, fontSize: 11),
       ),
