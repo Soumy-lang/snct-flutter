@@ -55,7 +55,7 @@ class _TrainFormPageState extends State<TrainFormPage> {
       print('Erreur chargement trains simples: ${response.statusCode}');
     }
   }
- 
+
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 

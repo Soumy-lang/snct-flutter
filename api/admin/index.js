@@ -138,6 +138,28 @@ app.get('/issues', async (req, res) => {
   }
 });
 
+app.delete('/issues/:trainId', async (req, res) => {
+  const client = new MongoClient(url);
+  try {
+    const { trainId } = req.params;
+    await client.connect();
+    const db = client.db(dbName);
+
+    const result = await db.collection('issues').deleteMany({ trainId: new ObjectId(trainId) });
+
+    await db.collection('trains').updateOne(
+      { _id: new ObjectId(trainId) },
+      { $set: { issues: false } }
+    );
+
+    res.status(200).send(`Issues supprimées: ${result.deletedCount}`);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  } finally {
+    await client.close();
+  }
+});
+
 app.get('/issues/train/:trainId', async (req, res) => {
   const client = new MongoClient(url);
   const trainId = req.params.trainId;
