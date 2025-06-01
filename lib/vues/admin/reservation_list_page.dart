@@ -35,12 +35,22 @@ class _ReservationListPageState extends State<ReservationListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Color cardColor = Color.fromARGB(255, 39, 176, 142).withOpacity(0.1);
+    // final Color cardColor = Color.fromARGB(255, 39, 176, 142).withOpacity(0.1);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Réservations"),
-        backgroundColor: Color.fromARGB(255, 39, 176, 142),
+        title: Row(
+          children: [
+            Image.asset(
+              '../assets/images/logo.jpg',
+              height: 40,
+            ),
+            SizedBox(width: 10),
+            Text("Toutes les réservations"),
+          ],
+        ),
+        backgroundColor: Colors.teal[700],
+        foregroundColor: Colors.white, 
       ),
       body: reservations.isEmpty
           ? Center(child: CircularProgressIndicator())
@@ -50,7 +60,6 @@ class _ReservationListPageState extends State<ReservationListPage> {
               itemBuilder: (_, index) {
                 final r = reservations[index];
                 return Card(
-                  color: cardColor,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 4,
                   margin: EdgeInsets.symmetric(vertical: 8),

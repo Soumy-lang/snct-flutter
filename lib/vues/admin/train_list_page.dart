@@ -18,6 +18,24 @@ class _TrainListPageState extends State<TrainListPage> {
     fetchTrains();
   }
 
+  Future<void> _deleteIssues(String trainId) async {
+    final response = await http.delete(
+      Uri.parse('http://localhost:3000/issues/$trainId'),
+    );
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Problèmes supprimés avec succès')),
+      );
+      fetchTrains();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur suppression problèmes: ${response.statusCode} for $trainId')),
+      );
+    }
+  }
+
+
   Future<void> fetchTrains() async {
     try {
       final trainsResponse = await http.get(Uri.parse('http://localhost:3000/trains'));
@@ -59,7 +77,20 @@ class _TrainListPageState extends State<TrainListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Liste des Trains')),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Image.asset(
+              '../assets/images/logo.jpg',
+              height: 40,
+            ),
+            SizedBox(width: 10),
+            Text('Programme'),
+          ],
+        ),
+        backgroundColor: Colors.teal[700],
+        foregroundColor: Colors.white, 
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: ListView.builder(
@@ -68,7 +99,6 @@ class _TrainListPageState extends State<TrainListPage> {
             final train = trains[index];
             return Card(
               margin: EdgeInsets.symmetric(vertical: 8),
-              color: Color.fromARGB(255, 39, 176, 142).withOpacity(0.1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -104,21 +134,28 @@ class _TrainListPageState extends State<TrainListPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Perturbations : ${train['issues'] == true ? 'Oui' : 'Non'}"),
-                        if (train['issues'] == true) 
+                        if (train['issues'] == true)
                           Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Text(
-                              issuesDetails[train['_id']] != null && issuesDetails[train['_id']]!.isNotEmpty
-                                ? issuesDetails[train['_id']].join('\n')
-                                : "Détails non disponibles",
-                              style: TextStyle(color: Colors.red[700]),
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    issuesDetails[train['_id']] != null && issuesDetails[train['_id']]!.isNotEmpty
+                                      ? issuesDetails[train['_id']].join('\n')
+                                      : "Détails non disponibles",
+                                    style: TextStyle(color: Colors.red[700]),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.red),
+                                  tooltip: "Supprimer les problèmes",
+                                  onPressed: () => _deleteIssues(train['_id']),
+                                ),
+                              ],
                             ),
                           )
-                        else
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Text("Non"),
-                          ),
                       ],
                     ),
 
