@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SNCT Admin',
+      title: 'SNCT',
       debugShowCheckedModeBanner: false,
       initialRoute: '/admin',
       routes: appRoutes,

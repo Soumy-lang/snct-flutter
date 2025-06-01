@@ -22,13 +22,12 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) throw new Error("Utilisateur non trouvé");
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error("Mot de passe incorrect");
+    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log(user.role)
+    res.json({ token, role: user.role });
 
-    // Génération du token JWT
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }

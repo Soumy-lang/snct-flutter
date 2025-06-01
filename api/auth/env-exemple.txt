@@ -1,3 +1,6 @@
-MONGO_URI=mongodb://localhost:27017/snct
+MONGO_URI=mongodb://localhost:2707/snct
 JWT_SECRET=maSuperCléSecrète123
+MAILTRAP_USER=votre_username_mailtrap
+MAILTRAP_PASS=votre_password_mailtrap
+EMAIL_USER=no-reply@snct.ru
 PORT=5000

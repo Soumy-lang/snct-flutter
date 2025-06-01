@@ -30,6 +30,16 @@ class _RegisterPageState extends State<RegisterPage> {
     controllerConfirmMdp.dispose();
     super.dispose();
   }
+  String? validateConfirmPassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Veuillez confirmer le mot de passe';
+    }
+    if (value != controllerMdp.text) {
+      return 'Les mots de passe ne correspondent pas';
+    }
+    return null;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -108,12 +118,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         confirmMdp = newValue!;
                       },
                       controller: controllerConfirmMdp,
-                      validator: (value){
-                          if (value == null || value.isEmpty) {
-                          return 'Merci de confirmer le mot de passe';
-                        }
-                        return null;
-                      },
+                      validator:validateConfirmPassword,
+
+//                       validator: (value){
+//                           if (value == null || value.isEmpty) {
+//                           return 'Merci de confirmer le mot de passe';
+//                         }
+//                         return null;
+//                       },
+
                       decoration: InputDecoration(
                         hintText: "Confirmer mot de passe",
                         border: OutlineInputBorder(

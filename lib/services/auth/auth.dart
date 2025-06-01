@@ -13,7 +13,7 @@ static Future<bool> register(String email, String password) async {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
     );
-    
+
     print("Status Code: ${response.statusCode}"); 
     print("Response Body: ${response.body}"); 
 
@@ -24,11 +24,10 @@ static Future<bool> register(String email, String password) async {
     }
   } catch (e) {
     print("Erreur d'inscription: $e"); 
+
     return false;
   }
 }
-
-  
   static Future<bool> login(String email, String password) async {
     final response = await http.post(
       Uri.parse("$_apiUrl/login"),
@@ -44,12 +43,10 @@ static Future<bool> register(String email, String password) async {
     return false;
   }
 
-  
   static Future<void> logout() async {
     await _storage.delete(key: 'auth_token');
   }
 
-  
   static Future<bool> isLoggedIn() async {
     return await _storage.read(key: 'auth_token') != null;
   }
