@@ -141,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     controllerMdp.text,
                                   );
                                   if (success) {
-                                    // Navigator.pushReplacementNamed(context, '/home');
+                                    Navigator.pushReplacementNamed(context, '/login');
                                     print("Less goo");
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(

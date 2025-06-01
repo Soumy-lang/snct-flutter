@@ -1,3 +1,3 @@
-MONGO_URI=mongodb://localhost:27017/SNCT
+MONGO_URI=mongodb://localhost:27017/snct
 JWT_SECRET=maSuperCléSecrète123
 PORT=5000

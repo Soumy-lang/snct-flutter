@@ -115,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                   controllerMdp.text,
                 );
                 if (success) {
-                  // Navigator.pushReplacementNamed(context, '/home');
+                  Navigator.pushReplacementNamed(context, '/admin');
                   print("Less goo");
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
