@@ -129,6 +129,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
+
   fixnum:
     dependency: transitive
     description:
@@ -208,6 +209,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+
   go_router:
     dependency: "direct main"
     description:
@@ -256,6 +258,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
+
   leak_tracker:
     dependency: transitive
     description:
@@ -320,6 +323,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.16.0"
+
   mongo_dart:
     dependency: "direct main"
     description:
@@ -352,6 +356,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.0"
+
   path:
     dependency: transitive
     description:
@@ -400,6 +405,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+
   pointycastle:
     dependency: transitive
     description:
@@ -432,6 +438,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.3"
+
   provider:
     dependency: "direct main"
     description:
@@ -440,6 +447,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.5"
+
   qr:
     dependency: transitive
     description:
@@ -637,6 +645,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "15.0.0"
+
   vy_string_utils:
     dependency: transitive
     description:
