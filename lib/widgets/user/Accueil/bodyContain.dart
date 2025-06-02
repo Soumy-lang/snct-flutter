@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../models/user/userModel.dart';
-import '../../services/userService.dart';
-import '../../vues/user/ResultatsTrajetPage.dart';
+import '../../../models/user/userModel.dart';
+import '../../../services/user/userService.dart';
+import '../../../vues/user/ResultatsTrajetPage.dart';
 
 
 class MybodyContain extends StatefulWidget {

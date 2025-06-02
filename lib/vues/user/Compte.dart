@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../widgets/myBottomAppBar.dart';
-import '../../widgets/myAppBar.dart';
+import '../../widgets/user/myBottomAppBar.dart';
+import '../../widgets/user/myAppBar.dart';
 class CompteScreen extends StatelessWidget {
   const CompteScreen({super.key});
 
