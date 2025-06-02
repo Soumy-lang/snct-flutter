@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SNCT',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/user',//'/admin',
+      initialRoute: '/user',
       routes: appRoutes,
 
     );
