@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
       return res.status(404).json({ message: "Aucun trajet trouvé." });
     }
 
-    res.status(200).json(trajetsTrouves); // ✅ renvoie la liste
+    res.status(200).json(trajetsTrouves); 
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

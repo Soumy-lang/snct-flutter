@@ -28,8 +28,7 @@ class TrajetPage_results extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(children: [
-                      Text("Ref: ${trajet['train'] ?? 'Inconnue'}"),
-                    Text(" Disponible: ${trajet['disponible'] ?? 'Non '}"),
+                      Text("Ref: ${trajet['trainLabel'] ?? 'Inconnue'}"),
                     Text(" Ligne: ${trajet['ligne'] ?? 'Inconnue '}"),
                     Text(" Prix: ${trajet['price'] ?? 'Inconnue '}"),
                     ],)
@@ -43,8 +42,8 @@ class TrajetPage_results extends StatelessWidget {
                     final trajetModel = TrajetModel(
                       departureTime: trajet['heure_depart'] ?? '',
                       arrivalTime: trajet['heure_arrivee'] ?? '',
-                      from: trajet['depart'] ?? '',
-                      to: trajet['destination'] ?? '',
+                      from: trajet['from'] ?? '',
+                      to: trajet['to'] ?? '',
                       trainLabel: trajet['ligne'] ?? '',
                       company: 'SNCT',
                       duration: trajet['duration'] ?? '',

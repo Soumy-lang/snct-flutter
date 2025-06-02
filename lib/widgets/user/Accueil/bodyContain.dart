@@ -5,8 +5,8 @@ import '../../../services/user/userService.dart';
 import '../../../vues/user/ResultatsTrajetPage.dart';
 import './FavoritesContent.dart';
 import 'package:flutter/rendering.dart';
-import './Accueil/FavoritesContent.dart';
-import '../../routes/route.dart';
+import 'FavoritesContent.dart';
+import '../../../routes/route.dart';
 import 'package:snct_app/routes/app_routes.dart';
 
 
@@ -213,7 +213,7 @@ class TicketCard extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.titres);  
+                Navigator.pushNamed(context,'/user/titres');  
               },
               icon: const Icon(Icons.shopping_bag, color: Colors.orange, size: 32),
             ),

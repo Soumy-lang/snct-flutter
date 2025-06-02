@@ -81,7 +81,7 @@ class MyBottomAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _buildNavItem(context, Icons.home, 'Accueil', 0),
-            _buildNavItem(context, Icons.directions_transit, 'Horaires', 1),
+            _buildNavItem(context, Icons.directions_transit, 'Lignes', 1),
             _buildNavItem(context, Icons.confirmation_num, 'Mes titres', 2),
             _buildNavItem(context, Icons.menu, 'Plus', 3),
           ],

@@ -20,6 +20,20 @@ class TrajetModel {
     required this.price,
     required this.isAvailable,
   });
+  factory TrajetModel.fromJson(Map<String, dynamic> json) {
+  return TrajetModel(
+    departureTime: json['departureTime'] ?? '',
+    arrivalTime: json['arrivalTime'] ?? '',
+    from: json['from'] ?? '',
+    to: json['to'] ?? '',
+    trainLabel: json['trainLabel'] ?? '',
+    company: json['company'] ?? '',
+    duration: json['duration'] ?? '',
+    price: json['price'] ?? 'non disponible',
+    isAvailable: json['isAvailable'] ?? false,
+  );
+}
+
 }
 
 
@@ -32,15 +46,15 @@ class TrajetModel {
 }*/
 
 class Search{
-  final String depart;
-  final String destination;
+  final String from;
+  final String to;
 
-  Search({required this.depart, required this.destination});
+  Search({required this.from, required this.to});
 
   Map<String, dynamic>toJson(){
     return{
-    'depart': depart,
-    'destination': destination,
+    'depart': from,
+    'destination': to,
     };
   }
 }

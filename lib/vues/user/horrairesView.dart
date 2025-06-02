@@ -9,8 +9,8 @@ class HorrairePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
-      bottomNavigationBar: MyBottomAppBar(),
+      appBar: MyAppBar(currentIndex: 1,),
+      bottomNavigationBar: MyBottomAppBar(currentIndex:1),
       body: MybodyContain(),
     );
   }

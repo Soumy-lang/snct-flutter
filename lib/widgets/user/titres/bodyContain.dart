@@ -6,7 +6,7 @@ import 'dart:convert';
 import '../../../models/user/TrajetModel.dart';
 import '../../../services/user/billet_service.dart';
 import '../../../models/user/PassModel.dart';
-
+import '../../../services/user/trajet_service.dart';
 
 
 
@@ -95,41 +95,45 @@ class SectionPliable extends StatelessWidget {
 }
 
 
-class BilleteriesGrid extends StatelessWidget {
+class BilleteriesGrid extends StatefulWidget {
   const BilleteriesGrid();
 
   @override
-  Widget build(BuildContext context) {
-    final List<TrajetModel> trajets = [
-      TrajetModel(
-        departureTime: "06:41",
-        arrivalTime: "09:13",
-        from: "Paris Gare de Lyon",
-        to: "Lyon St-Exupéry TGV",
-        trainLabel: "FR 9281",
-        company: "FRECCIAROSSA",
-        duration: "2 h 32 min • 1 correspondance",
-        price: "aucun prix trouvé",
-        isAvailable: false,
-      ),
-      TrajetModel(
-        departureTime: "07:13",
-        arrivalTime: "09:06",
-        from: "Paris Gare de Lyon",
-        to: "Lyon St-Exupéry TGV",
-        trainLabel: "TGV INOUI 6905",
-        company: "TGV INOUI",
-        duration: "1 h 53 min • direct",
-        price: "46,00 €",
-        isAvailable: true,
-      ),
-    ];
+  State<BilleteriesGrid> createState() => _BilleteriesGridState();
+}
 
-    return Column(
-      children: trajets.map((t) => TrajetCard(trajet: t)).toList(),
+class _BilleteriesGridState extends State<BilleteriesGrid> {
+  late Future<List<TrajetModel>> _futureTrajets;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureTrajets = TrajetService().fetchTrajets();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<TrajetModel>>(
+      future: _futureTrajets,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text("Erreur : ${snapshot.error}"));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text("Aucun trajet trouvé."));
+        }
+
+        final trajets = snapshot.data!;
+        return Column(
+          children: trajets.map((t) => TrajetCard(trajet: t)).toList(),
+        );
+      },
     );
   }
 }
+
+
 
 
 class TrajetCard extends StatelessWidget {
