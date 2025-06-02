@@ -35,7 +35,7 @@ class MyBottomAppBar extends StatelessWidget {
         _navigateWithFade(context, AchatPage());
         break;
       case 3:
-        _navigateWithFade(context, CompteScreen()); // ou ta page "Plus"
+        _navigateWithFade(context, CompteScreen()); 
         break;
     }
   }

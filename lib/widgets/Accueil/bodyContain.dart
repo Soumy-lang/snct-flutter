@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:snct_app/widgets/titres/bodyContain.dart';
 import '../../models/user/userModel.dart';
 import '../../services/userService.dart';
 import '../../vues/user/ResultatsTrajetPage.dart';
-
+import '../../routes/routes.dart';
+import '../Accueil/FavoritesContent .dart';
 
 class MybodyContain extends StatefulWidget {
   @override
@@ -16,8 +18,8 @@ class _MybodyContain extends State<MybodyContain> {
 
   // Fonction qui appelle l'API
  void trajet() async {
-  String depart = positionController.text;
-  String destination = destinationController.text;
+  String depart = positionController.text.trim();
+  String destination = destinationController.text.trim();
 
   if (depart.isEmpty || destination.isEmpty) {
     showDialog(
@@ -30,12 +32,11 @@ class _MybodyContain extends State<MybodyContain> {
     return;
   }
 
-  final Search trajetSchema = Search(depart: depart, destination: destination);
+  final searchRequest = Search(depart: depart, destination: destination);
 
   try {
-    final resultList = await recherhcedestiController.uservues(trajetSchema);
+    final resultList = await recherhcedestiController.fetchTrajets(searchRequest); // <- nom amélioré
 
-    // Naviguer vers une page qui affiche les résultats
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -48,6 +49,7 @@ class _MybodyContain extends State<MybodyContain> {
     );
   }
 }
+
 
 
   @override
@@ -181,7 +183,7 @@ class HeaderSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           Text('Me déplacer', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          Text('Mes titres >', style: TextStyle(color: Colors.orange)),
+          Text('Shop ', style: TextStyle(color: Colors.orange)),
         ],
       ),
     );
@@ -203,12 +205,17 @@ class TicketCard extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(16),
         child: Row(
-          children: const [
-            Icon(Icons.shopping_bag, color: Colors.orange, size: 32),
-            SizedBox(width: 12),
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.titres);  
+              },
+              icon: const Icon(Icons.shopping_bag, color: Colors.orange, size: 32),
+            ),
+            const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 Text('SNCT', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 Text('Acheter un titre', style: TextStyle(color: Colors.orange)),
               ],
@@ -219,6 +226,7 @@ class TicketCard extends StatelessWidget {
     );
   }
 }
+
 
 // SECTION: "À proximité"
 class NearbySection extends StatelessWidget {
@@ -232,7 +240,7 @@ class NearbySection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           Text('Infos trafic et réseaux', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          Text('Plan interactif', style: TextStyle(color: Colors.orange)),
+          Text('Perturbations sur les lignes', style: TextStyle(color: Colors.orange)),
         ],
       ),
     );
@@ -296,7 +304,7 @@ class FavoritesSection extends StatelessWidget {
 }
 
 class FavoritesCard extends StatelessWidget {
-  const FavoritesCard();
+  const FavoritesCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -308,7 +316,7 @@ class FavoritesCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.all(20),
-        child: const Text('Retrouve rapidement les infos de tes favoris (arrêts, lignes...)'),
+        child: const FavoritesContent(),
       ),
     );
   }

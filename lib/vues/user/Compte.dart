@@ -47,30 +47,15 @@ class CompteScreen extends StatelessWidget {
               ),
               child: Column(
                 children: const [
+                  
                   _OptionItem(
-                    icon: Icons.account_circle_outlined,
-                    label: "Mes infos personnelles",
-                  ),
-                  _OptionItem(
-                    icon: Icons.toggle_off_outlined,
+                    icon: Icons.qr_code,
                     label: "Mes données personnelles",
                   ),
                   _OptionItem(
                     icon: Icons.lock_outline,
-                    label: "Mot de passe",
-                  ),
-                  _OptionItem(
-                    icon: Icons.card_giftcard_outlined,
-                    label: "Mon programme fidélité",
-                  ),
-                  _OptionItem(
-                    icon: Icons.notifications_none,
-                    label: "Préférences d'alerte infos trafic",
-                  ),
-                  _OptionItem(
-                    icon: Icons.accessibility_outlined,
-                    label: "Mes préférences",
-                  ),
+                    label: "Changer de mot de passe",
+                  )
                 ],
               ),
             ),

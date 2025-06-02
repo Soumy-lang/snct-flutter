@@ -23,13 +23,13 @@ class TrajetModel {
 }
 
 
-class PassModel {
+/*class PassModel {
   final String label;
   final String description;
   final String price;
 
   PassModel(this.label, this.description, this.price);
-}
+}*/
 
 class Search{
   final String depart;
