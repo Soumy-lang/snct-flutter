@@ -16,7 +16,7 @@ final url = Uri.parse('http://localhost:4000/api/trajet');
 
   if (response.statusCode == 200) {
    final List<dynamic> data = jsonDecode(response.body);
-    return data; // tu reçois un objet "trajet", on le met dans une liste
+    return data; 
   } else {
     throw Exception("Erreur serveur : ${response.statusCode}");
   }

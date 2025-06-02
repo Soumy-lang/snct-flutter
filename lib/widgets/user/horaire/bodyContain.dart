@@ -42,7 +42,7 @@ Future<void> _fetchAndStoreLignes() async {
         'name': ligne['name'],
         'number': ligne['number'],
         'accessible': ligne['accessible'],
-        'color': _fromHex(ligne['color']) // convertit hex vers Color
+        'color': _fromHex(ligne['color'])
       }).toList();
       lignesLoaded = true;
     });

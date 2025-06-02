@@ -68,9 +68,8 @@ class _MybodyContain extends State<MybodyContain> {
 class DestinationSection extends StatelessWidget {
   final TextEditingController positionController;
   final TextEditingController destinationController;
-  final VoidCallback trajetCallback; // Fonction callback pour appeler trajet()
+  final VoidCallback trajetCallback; 
 
-  // Passer les contrôleurs et la fonction trajet en paramètres
   DestinationSection({required this.positionController, required this.destinationController, required this.trajetCallback});
 
   @override
@@ -100,7 +99,7 @@ class DestinationSection extends StatelessWidget {
                   child: Column(
                     children: [
                       TextField(
-                        controller: positionController, // Lier au TextEditingController
+                        controller: positionController, 
                         decoration: InputDecoration(
                           hintText: 'Votre position',
                           contentPadding: EdgeInsets.all(10),
@@ -108,7 +107,7 @@ class DestinationSection extends StatelessWidget {
                         ),
                       ),
                       TextField(
-                        controller: destinationController, // Lier au TextEditingController
+                        controller: destinationController, 
                         decoration: InputDecoration(
                           hintText: 'Destination',
                           contentPadding: EdgeInsets.all(10),

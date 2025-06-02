@@ -80,7 +80,7 @@ class _OptionItem extends StatelessWidget {
       title: Text(label),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        // Navigue vers la page concernée
+       
       },
     );
   }

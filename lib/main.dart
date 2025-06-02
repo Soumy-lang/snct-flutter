@@ -8,7 +8,6 @@ void main()  {
       providers: [
         ChangeNotifierProvider(create: (_) => CartProvider()),
       ],child: MyApp()));
-  // runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
