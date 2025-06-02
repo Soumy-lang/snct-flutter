@@ -9,11 +9,10 @@ import '../vues/admin/home_page_admin.dart';
 import '../vues/admin/train_list_page.dart';
 import '../vues/admin/reservation_list_page.dart';
 import '../vues/admin/nouveau_train.dart';
-
-import '../vues/user/titreView.dart';
-import '../vues/user/userView.dart';
 import '../vues/user/horairesView.dart';
-// import '../vues/user/ResultatsTrajetPage.dart';
+import '../vues/user/userView.dart';
+import '../vues/user/titreView.dart';
+
 
 final Map<String, WidgetBuilder> appRoutes = {
 
@@ -28,10 +27,8 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/admin/reservations': (context) => ReservationListPage(),
   '/admin/tous_les_trains': (context) => NewTrainFormPage(),
 
-
-  '/user':(context) => UserPage(),
+  '/user': (context) => UserPage(),
   '/user/titres': (context) => AchatPage(),
-  '/user/horaires':(context) => HorairesPage(),
-  // '/user/resultTrajet': (context) => TrajetPage_results(),
+  '/user/horaires': (context) => HorairesPage(),
 
 };

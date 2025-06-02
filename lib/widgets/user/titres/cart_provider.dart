@@ -3,6 +3,7 @@ import '../../../models/user/PassModel.dart';
 import '../../../models/user/TrajetModel.dart';
 import 'package:flutter/foundation.dart';
 
+
 class CartProvider with ChangeNotifier {
   final List<PassModel> _items = [];
   final List<TrajetModel> _itemsTrajet = [];
