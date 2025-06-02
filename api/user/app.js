@@ -27,5 +27,5 @@ app.use("/api/trajet", trajet);
 app.use('/api/arrets', arretRoute);
 app.use('/api/billets', billetRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
