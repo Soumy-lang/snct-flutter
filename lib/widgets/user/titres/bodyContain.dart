@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/user/TrajetModel.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import '../../services/user/billet_service.dart';
-import '../../models/user/PassModel.dart';
 import 'cart_provider.dart';
 import 'dart:convert';
+import '../../../models/user/TrajetModel.dart';
+import '../../../services/user/billet_service.dart';
+import '../../../models/user/PassModel.dart';
+
+
 
 
 class AchatPage extends StatelessWidget {

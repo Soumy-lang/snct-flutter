@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ArretService {
-  static const String apiUrl = "http://localhost:5000/api/arrets";
+  static const String apiUrl = "http://localhost:4000/api/arrets";
 
   Future<List<Map<String, dynamic>>> fetchArrets() async {
     final response = await http.get(Uri.parse(apiUrl));
@@ -17,7 +17,7 @@ class ArretService {
 
 
 Future<List<Map<String, dynamic>>> fetchArretsByLigneName(String ligneName) async {
-  final response = await http.get(Uri.parse('http://localhost:5000/api/arrets/ligne/$ligneName'));
+  final response = await http.get(Uri.parse('http://localhost:4000/api/arrets/ligne/$ligneName'));
 
   if (response.statusCode == 200) {
     return List<Map<String, dynamic>>.from(jsonDecode(response.body));

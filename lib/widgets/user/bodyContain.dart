@@ -5,6 +5,9 @@ import '../../services/user/userService.dart';
 import '../../vues/user/ResultatsTrajetPage.dart';
 import './Accueil/FavoritesContent.dart';
 import '../../routes/route.dart';
+import 'package:snct_app/routes/app_routes.dart';
+
+
 
 class MybodyContain extends StatefulWidget {
   @override

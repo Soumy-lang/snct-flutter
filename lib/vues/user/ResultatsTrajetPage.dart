@@ -4,6 +4,7 @@ import '../../widgets/user/myBottomAppBar.dart';
 import '../../widgets/user/titres/cart_provider.dart';
 import '../../models/user/TrajetModel.dart';
 
+
 class TrajetPage_results extends StatelessWidget {
   final List<dynamic> resultats;
 
