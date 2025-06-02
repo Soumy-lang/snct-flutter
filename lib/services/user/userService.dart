@@ -4,8 +4,9 @@ import '../../models/user/userModel.dart';
 
 
 class RechercheService {
-  Future<List<dynamic>> uservues(Search trajetSchema) async {
-  final url = Uri.parse('http://localhost:5000/api/trajet'); // adapte l'URL si besoin
+  Future<List<dynamic>> fetchTrajets(Search trajetSchema) async {
+final url = Uri.parse('http://localhost:4000/api/trajet');
+
 
   final response = await http.post(
     url,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:snct_app/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../../services/user/ligne_service.dart';
+import '../../../services/user/arret_service.dart';
 
 class LignesTab extends StatefulWidget {
   const LignesTab();
@@ -11,14 +13,16 @@ class LignesTab extends StatefulWidget {
 class _LignesTabState extends State<LignesTab> {
   final Set<String> favoris = {};
   final String _prefsKey = 'favoris_lignes';
+  final LigneService ligneService = LigneService();
+List<Map<String, dynamic>> lignes = [];
+bool lignesLoaded = false;
 
-  final List<Map<String, dynamic>> lignes = [
-      {'name': 'PRACOMTAL - FORTUNEAU/CHATEAUNEUF', 'accessible': false ,'number':'1','color':Colors.red,},
-      {'name': 'DE GAULLE - LE ROURE', 'accessible': false,'number':'10','color':Colors.pink},
-      {'name': 'DE GAULLE - CHATEAUNEUF', 'accessible': true,'number':'11','color':Colors.pinkAccent},
-      {'name': 'DE GAULLE - DURAS', 'accessible': true,'number':'12','color':Colors.lightBlue},
-      {'name': 'DE GAULLE - SYLVA CAMPUS', 'accessible': true ,'number':'13','color':Colors.green},
-    ];
+Color _fromHex(String hexColor) {
+  hexColor = hexColor.replaceAll("#", "");
+  return Color(int.parse("FF$hexColor", radix: 16));
+}
+
+  
 
     String searchQuery = '';
   final TextEditingController searchController = TextEditingController();
@@ -26,7 +30,26 @@ class _LignesTabState extends State<LignesTab> {
   void initState() {
     super.initState();
     _loadFavoris();
+    _fetchAndStoreLignes();
   }
+
+Future<void> _fetchAndStoreLignes() async {
+  try {
+    final result = await ligneService.fetchLignes();
+    setState(() {
+      
+      lignes = result.map((ligne) => {
+        'name': ligne['name'],
+        'number': ligne['number'],
+        'accessible': ligne['accessible'],
+        'color': _fromHex(ligne['color']) // convertit hex vers Color
+      }).toList();
+      lignesLoaded = true;
+    });
+  } catch (e) {
+    print('Erreur chargement des lignes : $e');
+  }
+}
 
   Future<void> _loadFavoris() async {
     final prefs = await SharedPreferences.getInstance();
@@ -56,6 +79,9 @@ class _LignesTabState extends State<LignesTab> {
   @override
   Widget build(BuildContext context) {
 final favorisLignes= lignes.where((lignes) => favoris.contains(lignes['name'])).toList();
+if (!lignesLoaded) {
+  return const Center(child: CircularProgressIndicator());
+}
 
 final List<Map<String, dynamic>> filteredLignes = lignes.where((lignes) {
       final name = lignes['name'].toString().toLowerCase();
@@ -105,11 +131,60 @@ final List<Map<String, dynamic>> filteredLignes = lignes.where((lignes) {
               accessible: lignes['accessible'],
               isFavorite: favoris.contains(lignes['name']),
               onStarTap: () => toggleFavori(lignes['name']),
+              onTap: () => _afficherArretsLigne(context, lignes['number']),
             )),
       ],
     );
   }
 }
+
+Future<void> _afficherArretsLigne(BuildContext context, String ligneName) async {
+  try {
+    final arrets = await ArretService().fetchArretsByLigneName(ligneName); // 👈 tu dois avoir cette méthode dans ton service
+    if (arrets.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text("Arrêts de la ligne $ligneName"),
+          content: const Text("Aucun arrêt trouvé pour cette ligne."),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: const Text("Fermer")),
+          ],
+        ),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text("Arrêts de la ligne $ligneName"),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: arrets.length,
+            itemBuilder: (_, index) {
+              final arret = arrets[index];
+              return ListTile(
+                title: Text(arret['name']),
+                trailing: arret['accessible'] == true ? const Icon(Icons.accessible, size: 18) : null,
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Fermer")),
+        ],
+      ),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Erreur : $e")));
+  }
+}
+
+
+
 
 class ArretsTab extends StatefulWidget  {
   const ArretsTab();
@@ -120,21 +195,33 @@ class ArretsTab extends StatefulWidget  {
 class _ArretsTabState extends State<ArretsTab> {
   final Set<String> favoris = {};
   final String _prefsKey = 'favoris_arrets';
+final ArretService arretService = ArretService();
+List<Map<String, dynamic>> arrets = [];
+bool arretsLoaded = false;
 
-  final List<Map<String, dynamic>> arrets = [
-      {'name': 'Aldridge', 'accessible': false},
-      {'name': 'Aldridges', 'accessible': false},
-      {'name': 'Alohat - Tropenas', 'accessible': true},
-      {'name': 'Aloha - Tropenas', 'accessible': true},
-      {'name': 'ANCONE Revellin', 'accessible': true},
-    ];
+
+
 String searchQuery = '';
   final TextEditingController searchController = TextEditingController();
     @override
   void initState() {
     super.initState();
     _loadFavoris();
+     _fetchArrets();
   }
+
+Future<void> _fetchArrets() async {
+  try {
+    final result = await arretService.fetchArrets();
+    setState(() {
+      arrets = result;
+      arretsLoaded = true;
+    });
+  } catch (e) {
+    print('Erreur chargement arrets : $e');
+  }
+}
+
 
   Future<void> _loadFavoris() async {
     final prefs = await SharedPreferences.getInstance();
@@ -165,6 +252,12 @@ String searchQuery = '';
   @override
   Widget build(BuildContext context) {
 final favorisArrets = arrets.where((arret) => favoris.contains(arret['name'])).toList();
+if (!arretsLoaded) {
+  return const Center(child: CircularProgressIndicator());
+}
+if (arrets.isEmpty) {
+  return const Center(child: Text("Aucun arrêt trouvé."));
+}
 
 final List<Map<String, dynamic>> filteredArrets = arrets.where((arret) {
       final name = arret['name'].toString().toLowerCase();
@@ -257,12 +350,14 @@ class LigneTile extends StatelessWidget {
   final bool accessible;
   final bool isFavorite;
   final VoidCallback onStarTap;
+  final VoidCallback onTap; 
 
-  const LigneTile({required this.number, required this.color, required this.name, required this.accessible, required this.isFavorite, required this.onStarTap});
+  const LigneTile({required this.number, required this.color, required this.name, required this.accessible, required this.isFavorite, required this.onStarTap ,required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(vertical: 4),
       leading: CircleAvatar(
         backgroundColor: color,

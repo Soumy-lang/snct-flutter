@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'routes/route.dart'; 
 import 'package:provider/provider.dart';
+import 'routes/route.dart'; 
 import './widgets/user/titres/cart_provider.dart';
-
 
 void main()  {
   runApp( MultiProvider(

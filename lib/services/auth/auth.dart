@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
-  static const _storage = FlutterSecureStorage();
+  static final _storage = FlutterSecureStorage();
   static const _apiUrl = "http://localhost:5000/api/auth";
 
 static Future<bool> register(String email, String password) async {

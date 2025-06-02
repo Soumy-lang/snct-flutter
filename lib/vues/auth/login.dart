@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snct_app/services/auth/auth.dart';
+import 'package:snct_app/widgets/user/myAppBar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:MyAppBar(currentIndex: 0),
       body: Container(
         margin: const EdgeInsets.all(24),
         child: Form(

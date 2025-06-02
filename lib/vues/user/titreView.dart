@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../widgets/user/myBottomAppBar.dart';
 import '../../widgets/user/myAppBar.dart';
-import '../../widgets/user/titres/bodyContain.dart';
+import '../../widgets/user/bodyContain.dart';
+
 
 /*class TitrePage extends StatelessWidget {
   @override

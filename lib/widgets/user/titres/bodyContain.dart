@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/user/TrajetModel.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'cart_provider.dart';
+import 'dart:convert';
+import '../../../models/user/TrajetModel.dart';
+import '../../../services/user/billet_service.dart';
+import '../../../models/user/PassModel.dart';
+
+
+
 
 class AchatPage extends StatelessWidget {
   @override
@@ -170,7 +177,8 @@ class TrajetCard extends StatelessWidget {
             /// Ajouter au panier
             Align(
               alignment: Alignment.centerRight,
-              child: ElevatedButton.icon(
+              child:Row(children: [
+                ElevatedButton.icon(
                 onPressed: trajet.isAvailable
                     ? () {
               Provider.of<CartProvider>(context, listen: false).addToCarts(trajet);
@@ -190,12 +198,134 @@ class TrajetCard extends StatelessWidget {
                   ),
                 ),
               ),
+              ElevatedButton.icon(
+  onPressed: trajet.isAvailable
+      ? () => confirmerPanier(context, trajet)
+      : null,
+  icon: const Icon(Icons.qr_code),
+  label: const Text("QR CODE"),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.orange,
+    foregroundColor: Colors.white,
+    disabledBackgroundColor: Colors.grey[300],
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+    ),
+  ),
+),
+
+
+              ],) 
             ),
           ],
         ),
       ),
     );
   }
+}
+
+void confirmerPanier(BuildContext context, TrajetModel trajet) {
+  final nomController = TextEditingController();
+  final emailController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: const Text("Vos informations"),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nomController,
+              decoration: const InputDecoration(labelText: 'Nom'),
+            ),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Annuler"),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            final nom = nomController.text.trim();
+            final email = emailController.text.trim();
+            if (nom.isNotEmpty && email.isNotEmpty) {
+              Navigator.pop(context);
+              showQrDialog(context, trajet, nom, email);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Veuillez remplir tous les champs")),
+              );
+            }
+          },
+          child: const Text("Valider et générer"),
+        ),
+      ],
+    ),
+  );
+}
+
+void showQrDialog(BuildContext context, TrajetModel trajet, String nom, String email) async {
+  final billet = {
+    'from': trajet.from,
+    'to': trajet.to,
+    'train': trajet.trainLabel,
+    'nom': nom,
+    'email': email,
+    'date': DateTime.now().toIso8601String(),
+  };
+
+  try {
+    await BilletService().enregistrerBillet(billet);
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Erreur: $e')),
+    );
+    return;
+  }
+
+  // On encode les infos comme un QR
+  final qrData = jsonEncode(billet);
+
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: const Center(child:Text("Votre billet")),
+      content: SizedBox(
+        width: 300,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              QrImageView(
+                data: qrData,
+                version: QrVersions.auto,
+                size: 200,
+              ),
+              const SizedBox(height: 16),
+              Text("Train : ${trajet.trainLabel}"),
+              Text("De ${trajet.from} → ${trajet.to}"),
+              Text("Nom : $nom"),
+              Text("Email : $email"),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text("Fermer"),
+        ),
+      ],
+    ),
+  );
 }
 
 
@@ -253,7 +383,7 @@ class PassCard extends StatelessWidget {
   ),
               ),
               Spacer(),
-              Icon(Icons.info_outline, color: Colors.teal),
+              Icon(Icons.qr_code, color: Colors.teal,),
             ],
           ),
           const SizedBox(height: 12),
