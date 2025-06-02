@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:snct_app/routes/routes.dart';
-import 'vues/user/userView.dart';
+import 'package:provider/provider.dart';
+import 'routes/route.dart'; 
+import './widgets/user/titres/cart_provider.dart';
 
 
-void main() {
-  runApp(const MyApp());
+void main()  {
+  runApp( MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
   @override
   Widget build(BuildContext context){
     return MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title:'SNCT',
-    initialRoute: AppRoutes.uservues,
-    onGenerateRoute:AppRoutes.generateRoute,
-  );
-}}
+      title: 'SNCT',
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/user',//'/admin',
+      routes: appRoutes,
 
+    );
+  }
+}

@@ -1,23 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../../models/user/userModel.dart';
+import '../../services/user/userService.dart';
+import '../../vues/user/ResultatsTrajetPage.dart';
+import './Accueil/FavoritesContent.dart';
+import '../../routes/route.dart';
 
 class MybodyContain extends StatefulWidget {
   @override
+  _MybodyContain createState() => _MybodyContain();
+}
 
-  _MybodyContain createState()=>_MybodyContain();}
+class _MybodyContain extends State<MybodyContain> {
+  final positionController = TextEditingController();
+  final destinationController = TextEditingController();
+  final recherhcedestiController = RechercheService();
 
+  // Fonction qui appelle l'API
+ void trajet() async {
+  String depart = positionController.text.trim();
+  String destination = destinationController.text.trim();
 
-  class _MybodyContain extends State<MybodyContain> {
-  final positionController =TextEditingController();
-  final destinationController =TextEditingController();  
+  if (depart.isEmpty || destination.isEmpty) {
+    showDialog(
+      context: context,
+      builder: (context) => const AlertDialog(
+        title: Text("Erreur"),
+        content: Text("Veuillez remplir les champs 'Votre position' et 'Destination'."),
+      ),
+    );
+    return;
+  }
 
-  void trajet()async {
-    final SearchTrajet= Search(
-      depart:positionController.text,
-      destination:destinationController.text,
+  final searchRequest = Search(depart: depart, destination: destination);
+
+  try {
+    final resultList = await recherhcedestiController.fetchTrajets(searchRequest); // <- nom amélioré
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => TrajetPage_results(resultats: resultList),
+      ),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Erreur lors de la requête : $e')),
     );
   }
+}
 
 
 
@@ -25,14 +56,20 @@ class MybodyContain extends StatefulWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(children: [DestinationSection(), ResumSection()]),
+        child: Column(children: [DestinationSection(positionController: positionController, destinationController: destinationController, trajetCallback: trajet), ResumSection()]),
       ),
     );
-
   }
 }
 
 class DestinationSection extends StatelessWidget {
+  final TextEditingController positionController;
+  final TextEditingController destinationController;
+  final VoidCallback trajetCallback; // Fonction callback pour appeler trajet()
+
+  // Passer les contrôleurs et la fonction trajet en paramètres
+  DestinationSection({required this.positionController, required this.destinationController, required this.trajetCallback});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,22 +94,25 @@ class DestinationSection extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Column (children: [ 
-                    const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Votre position',
-                      contentPadding: EdgeInsets.all(10),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Destination',
-                      contentPadding: EdgeInsets.all(10),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                  ]
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: positionController, // Lier au TextEditingController
+                        decoration: InputDecoration(
+                          hintText: 'Votre position',
+                          contentPadding: EdgeInsets.all(10),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                      TextField(
+                        controller: destinationController, // Lier au TextEditingController
+                        decoration: InputDecoration(
+                          hintText: 'Destination',
+                          contentPadding: EdgeInsets.all(10),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -92,9 +132,8 @@ class DestinationSection extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(25)),
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: trajetCallback, 
                   style: ElevatedButton.styleFrom(
-                    
                     shape: const CircleBorder(),
                     backgroundColor: const Color.fromARGB(255, 122, 222, 233),
                     padding: const EdgeInsets.all(10),
@@ -111,8 +150,6 @@ class DestinationSection extends StatelessWidget {
     );
   }
 }
-
-
 
 class ResumSection extends StatelessWidget {
   @override
@@ -146,7 +183,7 @@ class HeaderSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           Text('Me déplacer', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          Text('Mes titres >', style: TextStyle(color: Colors.orange)),
+          Text('Shop ', style: TextStyle(color: Colors.orange)),
         ],
       ),
     );
@@ -168,12 +205,17 @@ class TicketCard extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(16),
         child: Row(
-          children: const [
-            Icon(Icons.shopping_bag, color: Colors.orange, size: 32),
-            SizedBox(width: 12),
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.titres);  
+              },
+              icon: const Icon(Icons.shopping_bag, color: Colors.orange, size: 32),
+            ),
+            const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 Text('SNCT', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 Text('Acheter un titre', style: TextStyle(color: Colors.orange)),
               ],
@@ -184,6 +226,7 @@ class TicketCard extends StatelessWidget {
     );
   }
 }
+
 
 // SECTION: "À proximité"
 class NearbySection extends StatelessWidget {
@@ -197,7 +240,7 @@ class NearbySection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           Text('Infos trafic et réseaux', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          Text('Plan interactif', style: TextStyle(color: Colors.orange)),
+          Text('Perturbations sur les lignes', style: TextStyle(color: Colors.orange)),
         ],
       ),
     );
@@ -220,7 +263,7 @@ class NoStationsCard extends StatelessWidget {
         child: Column(
           children: [
             Icon(Icons.directions_train, size: 64, color: Colors.grey),
-            const SizedBox(height: 12,width: 100,),
+            const SizedBox(height: 12, width: 100),
             const Text(
               "! Perturbations",
               textAlign: TextAlign.center,
@@ -261,7 +304,7 @@ class FavoritesSection extends StatelessWidget {
 }
 
 class FavoritesCard extends StatelessWidget {
-  const FavoritesCard();
+  const FavoritesCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -273,9 +316,8 @@ class FavoritesCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.all(20),
-        child: const Text('Retrouve rapidement les infos de tes favoris (arrêts, lignes...)'),
+        child: const FavoritesContent(),
       ),
     );
   }
 }
-

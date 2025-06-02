@@ -3,16 +3,23 @@ const User = require('../models/search');
 const router = express.Router();
 
 
-router.get('/trajet', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { depart, destination } = req.body;
-    const trajet = new User({ depart, destination });
-    await trajet.save();
-    res.status(200).json({ message: "votre trajet est là" });
+
+    // 🔍 Rechercher dans MongoDB
+    const trajetsTrouves = await User.find({ depart, destination });
+
+    if (trajetsTrouves.length === 0) {
+      return res.status(404).json({ message: "Aucun trajet trouvé." });
+    }
+
+    res.status(200).json(trajetsTrouves); // ✅ renvoie la liste
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
+
 
 
 

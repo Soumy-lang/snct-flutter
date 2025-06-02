@@ -7,8 +7,8 @@ class UserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
-      bottomNavigationBar: MyBottomAppBar(),
+      appBar: MyAppBar(currentIndex: 0,),
+      bottomNavigationBar: MyBottomAppBar(currentIndex: 0),
       body: MybodyContain(),
     );
   }

@@ -2,21 +2,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../models/user/userModel.dart';
 
-class Recherhcedesti {
-  Future<String> uservues(Search TrajetSchema) async {
-    final url = Uri.parse('http://localhost:5000/trajet');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(TrajetSchema.toJson()),
-    );
 
-    if (response.statusCode == 200) {
-       final data =jsonDecode(response.body);
+class RechercheService {
+  Future<List<dynamic>> fetchTrajets(Search trajetSchema) async {
+final url = Uri.parse('http://localhost:5000/api/trajet');
 
-      return data['token'];
-    } else {
-      return  "${response.statusCode}";
-    }
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode(trajetSchema.toJson()),
+  );
+
+  if (response.statusCode == 200) {
+   final List<dynamic> data = jsonDecode(response.body);
+    return data; // tu reçois un objet "trajet", on le met dans une liste
+  } else {
+    throw Exception("Erreur serveur : ${response.statusCode}");
   }
+}
 }
