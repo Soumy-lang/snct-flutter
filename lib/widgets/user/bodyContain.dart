@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<<< HEAD:lib/widgets/user/bodyContain.dart
 import 'package:flutter/rendering.dart';
 import '../../models/user/userModel.dart';
 import '../../services/user/userService.dart';
@@ -8,11 +7,6 @@ import './Accueil/FavoritesContent.dart';
 import '../../routes/route.dart';
 import 'package:snct_app/routes/app_routes.dart';
 
-========
-import '../../../models/user/userModel.dart';
-import '../../../services/user/userService.dart';
-import '../../../vues/user/ResultatsTrajetPage.dart';
->>>>>>>> main:lib/widgets/user/Accueil/bodyContain.dart
 
 
 class MybodyContain extends StatefulWidget {
