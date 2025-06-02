@@ -129,7 +129,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
-
   fixnum:
     dependency: transitive
     description:
@@ -155,10 +154,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_secure_storage
-      sha256: "22dbf16f23a4bcf9d35e51be1c84ad5bb6f627750565edd70dab70f3ff5fff8f"
+      sha256: "5abe3d5c25ab435e48c47fb61bac25606062a305fac637c2f020e25abd30014a"
       url: "https://pub.dev"
     source: hosted
-    version: "8.1.0"
+    version: "5.1.2"
   flutter_secure_storage_linux:
     dependency: transitive
     description:
@@ -171,10 +170,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_secure_storage_macos
-      sha256: "6c0a2795a2d1de26ae202a0d78527d163f4acbb11cde4c75c670f3a0fc064247"
+      sha256: "388f76fd0f093e7415a39ec4c169ae7cceeee6d9f9ba529d788a13f2be4de7bd"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.3"
+    version: "1.1.2"
   flutter_secure_storage_platform_interface:
     dependency: transitive
     description:
@@ -195,10 +194,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_secure_storage_windows
-      sha256: "38f9501c7cb6f38961ef0e1eacacee2b2d4715c63cc83fe56449c4d3d0b47255"
+      sha256: ca89c8059cf439985aa83c59619b3674c7ef6cc2e86943d169a7369d6a69cab5
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "1.1.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -209,7 +208,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-
   go_router:
     dependency: "direct main"
     description:
@@ -258,7 +256,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
-
   leak_tracker:
     dependency: transitive
     description:
@@ -323,7 +320,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.16.0"
-
   mongo_dart:
     dependency: "direct main"
     description:
@@ -356,7 +352,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.0"
-
   path:
     dependency: transitive
     description:
@@ -405,7 +400,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-
   pointycastle:
     dependency: transitive
     description:
@@ -438,7 +432,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.3"
-
   provider:
     dependency: "direct main"
     description:
@@ -447,10 +440,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.5"
-<<<<<<< HEAD
-=======
-
->>>>>>> 51ecb41fc7ac9c36ab9fc38174479aa60a5728bf
   qr:
     dependency: transitive
     description:
@@ -467,8 +456,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
-<<<<<<< HEAD
-=======
   rational:
     dependency: transitive
     description:
@@ -493,7 +480,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
->>>>>>> 51ecb41fc7ac9c36ab9fc38174479aa60a5728bf
   shared_preferences:
     dependency: "direct main"
     description:
@@ -651,7 +637,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "15.0.0"
-
   vy_string_utils:
     dependency: transitive
     description:

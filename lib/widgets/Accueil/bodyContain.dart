@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snct_app/widgets/titres/bodyContain.dart';
+//import 'package:snct_app/widgets/titres/bodyContain.dart';
 import '../../models/user/userModel.dart';
 import '../../services/userService.dart';
 import '../../vues/user/ResultatsTrajetPage.dart';

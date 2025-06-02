@@ -21,7 +21,7 @@ class CompteScreen extends StatelessWidget {
               leading: const Icon(Icons.person_outline, size: 32),
               title: const Text("Se connecter / S’inscrire",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              onTap: () {
+              onTap: () {Navigator.pushNamed(context,'/login');
                 // Naviguer vers la page de connexion
               },
             ),

@@ -14,11 +14,10 @@ class AppRoutes {
 
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    print("Requested route: ${settings.name}");
     switch (settings.name) {
       case uservues:
         return MaterialPageRoute(builder: (_) => UserPage());
-        /*case resultTrajet:
-        return MaterialPageRoute(builder: (_) => TrajetPage_results());*/
       case titres:
         return MaterialPageRoute(builder: (_) => AchatPage());
       case horaires:

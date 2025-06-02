@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:snct_app/routes/routes.dart';
 import 'package:provider/provider.dart';
 import 'routes/route.dart'; 
+import './routes/routes.dart';
 import './widgets/titres/cart_provider.dart';
 
 
 void main()  {
-  runApp(MyApp());
+  runApp( MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+        // ... d'autres providers si besoin
+      ],child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SNCT',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/admin',
+      initialRoute: '/user',//'/admin',
       routes: appRoutes,
 
     );
