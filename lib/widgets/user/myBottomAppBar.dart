@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../vues/user/userView.dart';
-import '../vues/user/horairesView.dart';
-import '../vues/user/titreView.dart';
-import '../vues/user/Compte.dart';
+import '../../vues/user/userView.dart';
+import '../../vues/user/horairesView.dart';
+import '../../vues/user/titreView.dart';
+import '../../vues/user/Compte.dart';
 
 class MyBottomAppBar extends StatelessWidget {
   final int currentIndex;

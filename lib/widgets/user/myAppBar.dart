@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/titres/shopping_bag.dart';
+import 'titres/shopping_bag.dart';
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final int currentIndex;
   const MyAppBar({super.key,required this.currentIndex});

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snct_app/routes/routes.dart';
-import 'package:provider/provider.dart';
 import 'routes/route.dart'; 
-import './widgets/titres/cart_provider.dart';
 
 
 void main()  {
@@ -15,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SNCT',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/admin',
+      initialRoute: '/user',
       routes: appRoutes,
 
     );

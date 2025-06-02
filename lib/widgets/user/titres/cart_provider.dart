@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/user/TrajetModel.dart';
+import '../../../models/user/TrajetModel.dart';
 
 class CartProvider with ChangeNotifier {
   final List<PassModel> _items = [];

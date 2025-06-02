@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../models/user/userModel.dart';
+import '../../models/user/userModel.dart';
 
 
 class RechercheService {

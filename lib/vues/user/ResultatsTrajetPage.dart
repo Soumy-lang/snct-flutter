@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/myBottomAppBar.dart';
+import '../../widgets/user/myBottomAppBar.dart';
 
 
 class TrajetPage_results extends StatelessWidget {
